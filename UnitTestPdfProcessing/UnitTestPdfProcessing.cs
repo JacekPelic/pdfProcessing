@@ -12,13 +12,14 @@ namespace UnitTestPdfProcessing
         readonly private string ZAKUPY_TXT_FILE_PATH = @"C:\git\PdfProcessing\PdfProcessing\samples\zakupy.txt";
         readonly private string MENU_PDF_FILE_PATH = @"C:\git\PdfProcessing\PdfProcessing\samples\menu.pdf";
         readonly private string MENU_TXT_FILE_PATH = @"C:\git\PdfProcessing\PdfProcessing\samples\menu.txt";
+        readonly private string BUDGET_PDF_FILE_PATH = @"C:\git\PdfProcessing\PdfProcessing\samples\Budget_Tribute-Communities-Centre_2018.pdf";
 
         [TestMethod]
         //Not working properly now, but probably won't need to use that
         public void ReadPdfFileTest()
         {
             var pdfModule = new TikaServiceHandler();
-            var content = pdfModule.ReadPdfFile(ZAKUPY_PDF_FILE_PATH);
+            var content = pdfModule.ReadPdfFile(BUDGET_PDF_FILE_PATH);
             content.Wait();
 
             Assert.IsNotNull(content);
