@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PdfProcessing.models
+namespace FileParser.models
 {
     public class ItemList
     {

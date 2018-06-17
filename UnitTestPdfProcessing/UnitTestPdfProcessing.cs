@@ -1,7 +1,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PdfProcessing;
+using FileParser;
 using System.IO;
 using System.Text;
+using FileParser.helpers;
 
 namespace UnitTestPdfProcessing
 {
@@ -29,11 +30,11 @@ namespace UnitTestPdfProcessing
         //Not working properly now, but probably won't need to use that
         public void ReadShoppingListTest()
         {
-            var pdfProcess = new PdfProcess();
+            var pdfProcess = new FileParser.FileParser();
 
             var data = Encoding.UTF8.GetString(File.ReadAllBytes(ZAKUPY_TXT_FILE_PATH));
 
-            var itemList = pdfProcess.ReadShoppingList(data, PdfProcess.getShoppingListRegExp);
+            var itemList = pdfProcess.ReadShoppingList(data, RegexHelper.getShoppingListRegExp());
 
             Assert.IsNotNull(itemList);
             //Assert.AreEqual(itemList.ShoppingItems[0].ShoppingItem.Item2, 300);
@@ -43,11 +44,11 @@ namespace UnitTestPdfProcessing
         [TestMethod]
         public void ReadMenuTest()
         {
-            var pdfProcess = new PdfProcess();
+            var pdfProcess = new FileParser.FileParser();
 
             var data = Encoding.UTF8.GetString(File.ReadAllBytes(MENU_TXT_FILE_PATH));
 
-            var itemList = pdfProcess.ReadShoppingList(data, PdfProcess.getMenuRegExp);
+            var itemList = pdfProcess.ReadShoppingList(data, RegexHelper.getMenuRegExp());
 
             Assert.IsNotNull(itemList);
             Assert.AreNotEqual(0, itemList.ShoppingItems.Count);
