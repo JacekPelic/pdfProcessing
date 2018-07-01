@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace FileParser.helpers
+namespace FileProcessing.helpers
 {
     static public class RegexHelper
     {
@@ -22,7 +22,7 @@ namespace FileParser.helpers
             //match 1st group untill first '(' + number. 
             //Match 2nd with (number,number). 
             //Match 3rd with (char)+
-            return new Regex(@"([A-Za-z0-9żźćńółęąśŻŹĆĄŚĘŁÓŃ,.%\-() ]*)\(([0-9]*,?[0-9]*) ([a-zA-Z]+)");
+            return new Regex(@"([A-Za-z0-9żźćńółęąśŻŹĆĄŚĘŁÓŃ,.%\-() ]+)\(([0-9]*,?[0-9]*) ([a-zA-Z]+)");
         }
     }
 }

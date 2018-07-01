@@ -1,8 +1,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using FileParser;
+using FileProcessing;
 using System.IO;
 using System.Text;
-using FileParser.helpers;
+using FileProcessing.helpers;
+using System;
 
 namespace UnitTestPdfProcessing
 {
@@ -19,9 +20,9 @@ namespace UnitTestPdfProcessing
         //Not working properly now, but probably won't need to use that
         public void ReadPdfFileTest()
         {
-            var pdfModule = new TikaServiceHandler();
+          var pdfModule = new TikaServiceHandler();
             var content = pdfModule.ReadPdfFile(BUDGET_PDF_FILE_PATH);
-            content.Wait();
+            //content.Wait();
 
             Assert.IsNotNull(content);
             Assert.AreNotEqual("", content);
@@ -30,7 +31,7 @@ namespace UnitTestPdfProcessing
         //Not working properly now, but probably won't need to use that
         public void ReadShoppingListTest()
         {
-            var pdfProcess = new FileParser.FileParser();
+            var pdfProcess = new ShoppingList();
 
             var data = Encoding.UTF8.GetString(File.ReadAllBytes(ZAKUPY_TXT_FILE_PATH));
 
@@ -44,14 +45,18 @@ namespace UnitTestPdfProcessing
         [TestMethod]
         public void ReadMenuTest()
         {
-            var pdfProcess = new FileParser.FileParser();
+            var pdfProcess = new ShoppingList();
 
             var data = Encoding.UTF8.GetString(File.ReadAllBytes(MENU_TXT_FILE_PATH));
 
             var itemList = pdfProcess.ReadShoppingList(data, RegexHelper.getMenuRegExp());
 
+            var chuj = pdfProcess.CombineDuplicatedItems(itemList);
+
+            pdfProcess.SaveShoppingListToFile(chuj, "zakupy.txt");
+
             Assert.IsNotNull(itemList);
-            Assert.AreNotEqual(0, itemList.ShoppingItems.Count);
+            Assert.AreNotEqual(0, itemList.Count);
         }
     }
 }
