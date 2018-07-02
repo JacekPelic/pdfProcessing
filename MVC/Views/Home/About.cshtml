@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "About";
+}
+<div style="position:center">
+    <header >
+        Give me menu file in .pdf format
+    </header>
+</div>
+<div class="k-upload-button btn btn-lg btn-primary">
+    @Html.BeginForm("ProcessFile", "Home", FormMethod.Post, new { enctype = "multipart/form-data" })
+    {
+    <input id="clientUpload" name="file" type="file" data-btn-text="Select any file" data-role="upload" multiple="multiple" autocomplete="off">
+    <input type="submit" value="Upload Image" />
+    }
+</div>
+
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane fade in active" id="content-tab">
+        <div id="example-container">
+
+            <!-- example markup -->
+            <a id="clear" href="#" class="btn btn-mini">Clear</a>
+            <div id="target" class="well"><h4>Drop Here</h4></div>
+            <!-- /example markup -->
+
+        </div>
+    </div>
+</div>

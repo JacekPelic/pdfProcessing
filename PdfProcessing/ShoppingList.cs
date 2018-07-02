@@ -10,6 +10,8 @@ namespace FileProcessing
 {
     public class ShoppingList
     {
+        public List<Item> ShopingItems { get; private set; }
+
         private enum Meals
         {
             Breakfest,
@@ -18,17 +20,17 @@ namespace FileProcessing
             Dinner,
             NrOfMeals
         }
-
-        /// <summary>
-        /// export shopping list from data to ItemList
-        /// </summary>
-        /// <param name="data"></param>
-        /// <param name="matchingExpression"></param>
-        /// <returns> Shopping list with duplicated items</returns>
-        public List<Item> ReadShoppingList(string data, Regex matchingExpression)
+                
+        public ShoppingList(string data, Regex matchingExpression)
         {
-            var items = new List<Item>();
+            ShopingItems = new List<Item>();
 
+            createShoppingList(data, matchingExpression);
+            combineDuplicatedItems();
+        }
+
+        private void createShoppingList(string data, Regex matchingExpression)
+        {
             //First day starts with breakfast
             int mealNr = (int)Meals.Breakfest;
 
@@ -59,7 +61,7 @@ namespace FileProcessing
                     //Add all ingredients for the meal to the shoppingList
                     do
                     {
-                     
+
                         var itemName = matchResult.Groups[1].ToString().Trim();
                         var itemQuantity = double.Parse(matchResult.Groups[2].ToString());
                         var QuantityUnit = matchResult.Groups[3].ToString().Trim();
@@ -71,11 +73,11 @@ namespace FileProcessing
                             Unit = QuantityUnit
                         };
 
-                        items.Add(Shoppingitem);
+                        ShopingItems.Add(Shoppingitem);
                         matchResult = matchingExpression.Match(formatedData[++i]);
 
                     } while (matchResult.Groups.Count == 4);
-                    
+
                 }
 
                 if (++mealNr == (int)Meals.NrOfMeals)
@@ -83,23 +85,20 @@ namespace FileProcessing
                     mealNr = 0;
                 }
             }
-            return items;
         }
 
-        public List<Item> CombineDuplicatedItems(List<Item> itemList)
+        private void combineDuplicatedItems()
         {
-            var combinedShoppingList = itemList.GroupBy(x => x.Name)
+            ShopingItems = ShopingItems.GroupBy(x => x.Name)
                 .Select(group => group.Skip(1).Aggregate(
                     group.First(), (a, x) => { a.Quantity += x.Quantity; return a; })).ToList();
-
-            return combinedShoppingList;
         }
 
-        public bool SaveShoppingListToFile(List<Item> items, string fileName)
+        public bool SaveShoppingListToFile(string fileName)
         {
             using (StreamWriter tw = new StreamWriter(fileName))
             {
-                foreach (var item in items)
+                foreach (var item in ShopingItems)
                 {
                     var sb = new StringBuilder();
                     sb.Append(item.Name);

@@ -1,0 +1,63 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Carousel */
+.carousel-caption p {
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item img[src$=".svg"] {
+    width: 100%;
+}
+
+/* QR code generator */
+#qrCode {
+    margin: 15px;
+}
+
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+    /* Hide captions */
+    .carousel-caption {
+        display: none;
+    }
+}
+
+[data-role="drag-drop-target"] {
+    float: left;
+    width: 500px;
+    height: 376px;
+    margin: 10px;
+    padding: 10px;
+    border: 3px solid #ddd;
+    border-radius: 4px;
+}
+
+.over {
+    background-color: #ffc;
+}
+
+[draggable="true"] {
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    /* Support old versions of WebKit */
+    -khtml-user-drag: element;
+    -webkit-user-drag: element;
+}
+
+.drag {
+    opacity: 0.25;
+}
