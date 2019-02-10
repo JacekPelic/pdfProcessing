@@ -14,7 +14,6 @@ namespace FileProcessing
         public string ReadPdfFile(string path)
         {
             WebClient wc = new WebClient();
-
             var tikaUrl = new Uri(TIKKA_CONNECTION_URL);
 
             
